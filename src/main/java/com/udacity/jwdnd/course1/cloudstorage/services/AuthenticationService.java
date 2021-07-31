@@ -24,7 +24,7 @@ public class AuthenticationService implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
-
+        //var x = 12;
         SDDUser user = userMapper.getUser(username);
         if (user != null) {
             String encodedSalt = user.getSalt();
