@@ -16,7 +16,7 @@ public interface SDDUserMapper {
     SDDUser getUserById(Integer userId);
 
     @Insert("INSERT INTO SDDUser (username, salt, password, firstname, lastname) VALUES(#{username}, #{salt}, #{password}, #{firstName}, #{lastName})")
-    @Options(useGeneratedKeys = true, keyProperty = "userId")
+    @Options(useGeneratedKeys = true, keyProperty = "userid")
     int createUser(SDDUser user);
 
 }
