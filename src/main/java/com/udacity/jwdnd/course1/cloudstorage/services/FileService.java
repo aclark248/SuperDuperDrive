@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -32,9 +33,16 @@ public class FileService {
         var userId = sddUser.getUserId();
         newFile.setUserid(userId);
         var result = fileMapper.insertFile(newFile);
-        //var result = fileMapper.insertFile(newFile.getFilename(), newFile.getContenttype(), newFile.getFilesize(), userId, newFile.getFiledata());
         var x = 12;
         return result;
+    }
+
+    public List<File> getAllFiles(String userName)
+    {
+        SDDUser sddUser = sddUserService.getUser(userName);
+        var userId = sddUser.getUserId();
+        List<File> allUserFiles = fileMapper.getAllFiles(userId);
+        return allUserFiles;
     }
 
 

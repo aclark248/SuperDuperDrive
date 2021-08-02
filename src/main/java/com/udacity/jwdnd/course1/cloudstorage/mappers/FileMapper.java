@@ -1,10 +1,9 @@
 package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.File;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface FileMapper {
@@ -14,5 +13,10 @@ public interface FileMapper {
     @Options(useGeneratedKeys = true, keyProperty = "fileid")
     //int insertFile(@Param("filename") String filename, @Param("contenttype") String contenttype, @Param("filesize") String filesize, @Param("userid") int userid, @Param("filedata") byte[] filedata);
     int insertFile(File file);
+
+    @Select("SELECT * FROM FILES WHERE userid = #{userid}")
+    List<File> getAllFiles(int userid);
+
+
 
 }
