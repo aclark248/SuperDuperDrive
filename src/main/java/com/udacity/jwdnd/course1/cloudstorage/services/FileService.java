@@ -33,7 +33,6 @@ public class FileService {
         var userId = sddUser.getUserId();
         newFile.setUserid(userId);
         var result = fileMapper.insertFile(newFile);
-        var x = 12;
         return result;
     }
 
@@ -51,9 +50,10 @@ public class FileService {
         return userFile;
     }
 
-    public void deleteFile(int fileid)
+    public int deleteFile(int fileid)
     {
-        fileMapper.deleteFile(fileid);
+        var result = fileMapper.deleteFile(fileid);
+        return result;
     }
 
 
