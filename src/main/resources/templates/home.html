@@ -40,6 +40,8 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}"></div>
+
                         <div class="table-responsive">
                             <table class="table table-striped" id="fileTable">
                                 <thead>
@@ -49,12 +51,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
+                                <tr th:each="file: ${allUserFiles}">
                                     <td>
-                                        <a target="_blank" class="btn btn-success">View</a>
-                                        <a  class="btn btn-danger">Delete</a>
+                                        <a th:href="@{/get-file/{id}(id = ${file.fileid})}" class="btn btn-success">View</a>
+                                        <a th:href="@{/delete-file/{id}(id = ${file.fileid})}" class="btn btn-danger">Delete</a>
                                     </td>
-                                    <th scope="row">ExampleFile.txt</th>
+                                    <th scope="row" th:text="${file.filename}"></th>
                                 </tr>
                                 </tbody>
                             </table>
