@@ -18,8 +18,6 @@ public class FilesController {
 
     private FileService fileService;
 
-    public int result;
-
     public FilesController(FileService fileService)
     {
         this.fileService = fileService;
@@ -33,29 +31,32 @@ public class FilesController {
     }
 
     @PostMapping("/file-upload")
-    public String fileUpload(Authentication authentication, MultipartFile fileUpload) throws IOException {
+    public String fileUpload(Authentication authentication, MultipartFile fileUpload, RedirectAttributes redirectAttributes) throws IOException {
         var userName = authentication.getPrincipal().toString();
-        result = fileService.addFile(fileUpload, userName);
+        var result = fileService.addFile(fileUpload, userName);
+        if(result == 1) {
+            redirectAttributes.addFlashAttribute("success", "The file was successfully deleted.");
+        } else if (result == 0)
+        {
+            redirectAttributes.addFlashAttribute("success", "The file was successfully deleted.");
+        }
+        var x = 12;
         return "redirect:/home";
     }
 
     @GetMapping("/delete-file/{id}")
-    public String deleteFile(@PathVariable("id") int fileid, Model model)
+    public String deleteFile(@PathVariable("id") int fileid, Model model, RedirectAttributes redirectAttributes)
     {
-        result = fileService.deleteFile(fileid);
+        var result = fileService.deleteFile(fileid);
+        if(result == 1) {
+            redirectAttributes.addFlashAttribute("success", "The file was successfully deleted.");
+        } else if (result == 0)
+        {
+            redirectAttributes.addFlashAttribute("success", "The file was successfully deleted.");
+        }
         return "redirect:/home";
     }
 
-
-    @ModelAttribute
-    public void addAttributes(Authentication authentication, RedirectAttributes redirectAttributes) {
-        if(result == 1) {
-            redirectAttributes.addAttribute("success", "The file was successfully deleted.");
-        } else if (result == 0)
-        {
-            redirectAttributes.addAttribute("success", "The file was successfully deleted.");
-        }
-    }
 
 
 }
