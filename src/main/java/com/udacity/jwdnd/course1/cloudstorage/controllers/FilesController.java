@@ -40,7 +40,6 @@ public class FilesController {
         {
             redirectAttributes.addFlashAttribute("success", "The file was successfully deleted.");
         }
-        var x = 12;
         return "redirect:/home";
     }
 
