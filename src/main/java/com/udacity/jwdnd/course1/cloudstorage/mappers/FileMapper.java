@@ -17,6 +17,10 @@ public interface FileMapper {
     @Select("SELECT * FROM FILES WHERE userid = #{userid}")
     List<File> getAllFiles(int userid);
 
+    @Select("SELECT * FROM FILES WHERE fileid = #{fileid}")
+    File getFile(int fileid);
 
+    @Delete("DELETE FROM FILES WHERE fileid = #{fileid}")
+    void deleteFile(int fileid);
 
 }

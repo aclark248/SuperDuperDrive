@@ -45,5 +45,16 @@ public class FileService {
         return allUserFiles;
     }
 
+    public File getFile(int fileid)
+    {
+        File userFile = fileMapper.getFile(fileid);
+        return userFile;
+    }
+
+    public void deleteFile(int fileid)
+    {
+        fileMapper.deleteFile(fileid);
+    }
+
 
 }

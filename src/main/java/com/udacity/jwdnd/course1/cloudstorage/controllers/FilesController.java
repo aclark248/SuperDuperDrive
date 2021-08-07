@@ -1,5 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
+import com.udacity.jwdnd.course1.cloudstorage.models.File;
 import com.udacity.jwdnd.course1.cloudstorage.services.AuthenticationService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import org.springframework.http.MediaType;
@@ -11,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Controller
-//@RequestMapping("/")
 public class FilesController {
 
     private FileService fileService;
@@ -30,9 +30,16 @@ public class FilesController {
     }
 
     @GetMapping("/get-file/{id}")
-    public String getFile(@PathVariable("id") int fileId)
+    public @ResponseBody byte[] getFile(@PathVariable("id") int fileId)
     {
-        var x = 412;
+        var file = fileService.getFile(fileId).getFiledata();
+        return file;
+    }
+
+    @GetMapping("/delete-file/{id}")
+    public String deleteFile(@PathVariable("id") int fileid)
+    {
+        fileService.deleteFile(fileid);
         return "home";
     }
 
