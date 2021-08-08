@@ -16,7 +16,7 @@ public interface NotesMapper {
     public Note findOne(int noteid);
 
     @Select("SELECT * FROM NOTES WHERE userid = #{userid}")
-    public List<Note> findByUserId(int userid);
+    public List<Note> findUserNotes(int userid);
 
     @Insert("INSERT INTO NOTES (notetitle, notedescription, userid) VALUES (#{note.notetitle}, #{note.notedescription}, #{userid})")
     public int insertNote(Note note, int userid);

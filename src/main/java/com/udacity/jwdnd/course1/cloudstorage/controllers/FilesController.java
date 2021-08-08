@@ -35,10 +35,10 @@ public class FilesController {
         var userName = authentication.getPrincipal().toString();
         var result = fileService.addFile(fileUpload, userName);
         if(result == 1) {
-            redirectAttributes.addFlashAttribute("success", "The file was successfully deleted.");
+            redirectAttributes.addFlashAttribute("success", "The file was successfully created.");
         } else if (result == 0)
         {
-            redirectAttributes.addFlashAttribute("success", "The file was successfully deleted.");
+            redirectAttributes.addFlashAttribute("success", "The file was successfully created.");
         }
         return "redirect:/home";
     }
