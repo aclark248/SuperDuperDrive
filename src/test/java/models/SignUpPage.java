@@ -9,19 +9,22 @@ public class SignUpPage {
 
     //first name    inputFirstName
     @FindBy(id = "inputFirstName")
-    private WebElement firstName;
+    public WebElement firstName;
 
     //last name      inputLastName
     @FindBy(id = "inputLastName")
-    private WebElement lastName;
+    public WebElement lastName;
 
     //username      inputUsername
     @FindBy(id = "inputUsername")
-    private WebElement userName;
+    public WebElement userName;
 
     //password      inputPassword
     @FindBy(id = "inputPassword")
-    private WebElement password;
+    public WebElement password;
+
+    @FindBy(id = "signUpUserBtn")
+    public WebElement clickSignUpUserBtn;
 
     public SignUpPage(WebDriver driver)
     {

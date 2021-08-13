@@ -10,26 +10,18 @@ public class LoginPage {
 
 
     @FindBy(id = "inputUsername")
-    private WebElement userName;
+    public WebElement userName;
 
 
     @FindBy(id = "inputPassword")
-    private WebElement password;
+    public WebElement password;
 
     @FindBy(id = "loginButton")
-    private WebElement loginButton;
+    public WebElement loginButton;
 
-    @FindBy(id = "loginButtonssss")
-    private WebElement loginButtonsss;
 
     @FindBy(id = "signUpButton")
-    private WebElement signUpButton;
-
-    public LoginPage(WebDriver driver)
-    {
-        PageFactory.initElements(driver, this);
-    }
-
+    public WebElement signUpButton;
 
     public void clickLoginButton()
     {
@@ -40,5 +32,12 @@ public class LoginPage {
     {
         signUpButton.click();
     }
+
+    public LoginPage(WebDriver driver)
+    {
+        PageFactory.initElements(driver, this);
+    }
+
+
 
 }

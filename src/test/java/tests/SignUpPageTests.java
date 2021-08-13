@@ -58,36 +58,68 @@ public class SignUpPageTests {
     //Write a test that verifies that an unauthorized user can only access the login and signup pages
     @Test
     public void authorizationTest() {
-        var y = loginPage;
-        loginPage.clickSignUpButton();
-
-        //var wait = new WebDriverWait(driver, 60);
-        //wait.until(ExpectedConditions.presenceOfElementLocated(By.id("signUpButton")));
+        //unauthorized can only access login page
+        driver.get("http://localhost:" + port + "/home");
         String currentPage = driver.getCurrentUrl();
-
-        var x = 12;
-
-
-        //current page is login
         assertEquals(currentPage, getLoginPageUrl());
 
-        //navigate to signup page
-
-
+        driver.get("http://localhost:" + port + "/signup");
         currentPage = driver.getCurrentUrl();
-        //assert correct
-
-        //navigate to home page
-        //assert on login page
-
+        assertEquals(currentPage, getSignUpPageUrl());
     }
 
+    //Write a test that signs up a new user,
+    // logs in,
+    // verifies that the home page is accessible,
+    // logs out,
+    // and verifies that the home page is no longer accessible.
+    @Test
+    public void createUser() {
+        //navigate to sign up page
+        driver.get("http://localhost:" + port + "/signup");
+        signUpPage = new SignUpPage(driver);
+
+        //fill out sign up form
+        signUpPage.firstName.sendKeys("John");
+        signUpPage.lastName.sendKeys("Doe");
+        signUpPage.userName.sendKeys("johndoe");
+        signUpPage.password.sendKeys("Password1");
+
+        //click sign up button
+        signUpPage.clickSignUpUserBtn.click();
+
+        //check user saved in database
+
+        //navigate to login page
+        driver.get("http://localhost:" + port + "/login");
+        loginPage = new LoginPage(driver);
+        loginPage.userName.sendKeys("johndoe");
+        loginPage.password.sendKeys("Password1");
+        loginPage.clickLoginButton();
+
+        //expect home page
+        String currentPage = driver.getCurrentUrl();
+
+        assertEquals(currentPage, getHomePageURL());
+
+
+    }
 
     public String getLoginPageUrl() {
         var url = "http://localhost:" + port + "/login";
         return url;
     }
 
+    public String getSignUpPageUrl() {
+        var url = "http://localhost:" + port + "/signup";
+        return url;
+    }
+
+    public String getHomePageURL()
+    {
+        var url = "http://localhost:" + port + "/home";
+        return url;
+    }
 
 
 
