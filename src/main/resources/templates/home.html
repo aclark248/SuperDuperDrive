@@ -63,12 +63,12 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="nav-notes" role="tabpanel" aria-labelledby="nav-notes-tab">
-                        <button style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
+                        <button id="addNewNoteButton" style="margin: 0.25em;" type="button" class="btn btn-info float-right" onclick="showNoteModal()">
                             + Add a New Note
                         </button>
 
                         <div class="table-responsive">
-                            <table class="table table-striped" id="userTable">
+                            <table class="table table-striped" id="notesTable">
                                 <thead>
                                     <tr>
                                         <th style="width: 20%" scope="col"></th>
@@ -89,8 +89,8 @@
                                             <a th:href="@{/delete-note/{id}(id = ${note.noteid})}" class="btn btn-danger">Delete</a>
                                        </td>
 
-                                        <th scope="row" th:text="${note.notetitle}"></th>
-                                        <td th:text="${note.notedescription}"></td>
+                                        <th id="tableNoteTitle" scope="row" th:text="${note.notetitle}"></th>
+                                        <td id="tableNoteDescription" th:text="${note.notedescription}"></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -121,8 +121,10 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
+                                        <button id = "note-save-changes" type="button" class="btn btn-primary" onclick="$('#noteSubmit').click();">Save changes</button>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>
@@ -187,13 +189,11 @@
                                                 <label for="note-title" class="col-form-label">Password</label>
                                                 <input th:field="*{password}" type="text" name= "password" class="form-control" id="credential-password" maxlength="30" required>
                                             </div>
-                                            <button id="credentialSubmit" type="submit" class="d-none"></button>
+                                            <div>Test divvvvv</div>
+                                            <button id="credentialSubmit" type="submit" class="d-none">Save changes</button>
                                         </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="$('#credentialSubmit').click();">Save changes</button>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>

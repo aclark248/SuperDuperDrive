@@ -28,8 +28,11 @@ public class SignUpController {
 
     @PostMapping()
     public String signupUser(@ModelAttribute SDDUser user){
-        var createUserResult = sddUserService.createUser(user);
-        var x = 12;
+        var doesUserExists = sddUserService.getUser(user.getUsername());
+        if (doesUserExists == null)
+        {
+            var createUserResult = sddUserService.createUser(user);
+        }
 
         return "login";
     }
