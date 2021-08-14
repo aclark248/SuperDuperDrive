@@ -28,7 +28,7 @@ public class FileService {
         newFile.setFilename(file.getOriginalFilename());
         newFile.setFilesize(Long.toString(file.getSize()));
         SDDUser sddUser = sddUserService.getUser(userName);
-        var userId = sddUser.getUserId();
+        var userId = sddUser.getUserid();
         newFile.setUserid(userId);
         var result = fileMapper.insertFile(newFile);
         return result;
@@ -37,7 +37,7 @@ public class FileService {
     public List<File> getAllFiles(String userName)
     {
         SDDUser sddUser = sddUserService.getUser(userName);
-        var userId = sddUser.getUserId();
+        var userId = sddUser.getUserid();
         List<File> allUserFiles = fileMapper.getAllFiles(userId);
         return allUserFiles;
     }

@@ -5,6 +5,7 @@ import com.udacity.jwdnd.course1.cloudstorage.services.SDDUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -26,7 +27,7 @@ public class SignUpController {
     }
 
     @PostMapping()
-    public String signupUser(SDDUser user){
+    public String signupUser(@ModelAttribute SDDUser user){
         var createUserResult = sddUserService.createUser(user);
         var x = 12;
 

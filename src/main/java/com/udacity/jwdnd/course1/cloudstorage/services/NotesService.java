@@ -24,7 +24,7 @@ public class NotesService {
     public int addNote(Note note, String userName)
     {
         SDDUser sddUser = sddUserService.getUser(userName);
-        var userId = sddUser.getUserId();
+        var userId = sddUser.getUserid();
         var result = notesMapper.insertNote(note, userId);
         return result;
     }
@@ -32,7 +32,7 @@ public class NotesService {
     public List<Note> getUserNotes(String username)
     {
         SDDUser sddUser = sddUserService.getUser(username);
-        var userid = sddUser.getUserId();
+        var userid = sddUser.getUserid();
         var userNotes = notesMapper.findUserNotes(userid);
         return userNotes;
     }

@@ -4,6 +4,7 @@ package tests;
 import com.udacity.jwdnd.course1.cloudstorage.CloudStorageApplication;
 import com.udacity.jwdnd.course1.cloudstorage.controllers.HomeController;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import models.HomePage;
 import models.LoginPage;
 import models.SignUpPage;
 import org.junit.jupiter.api.*;
@@ -82,27 +83,34 @@ public class SignUpPageTests {
         //fill out sign up form
         signUpPage.firstName.sendKeys("John");
         signUpPage.lastName.sendKeys("Doe");
-        signUpPage.userName.sendKeys("johndoe");
-        signUpPage.password.sendKeys("Password1");
+        signUpPage.userName.sendKeys("johndoe324");
+        signUpPage.password.sendKeys("ApeCook2443");
 
         //click sign up button
-        signUpPage.clickSignUpUserBtn.click();
-
-        //check user saved in database
+        signUpPage.signUpUserBtn.click();
 
         //navigate to login page
         driver.get("http://localhost:" + port + "/login");
         loginPage = new LoginPage(driver);
-        loginPage.userName.sendKeys("johndoe");
-        loginPage.password.sendKeys("Password1");
-        loginPage.clickLoginButton();
+        loginPage.userName.sendKeys("johndoe324");
+        loginPage.password.sendKeys("ApeCook2443");
+        loginPage.loginButton.click();
 
         //expect home page
         String currentPage = driver.getCurrentUrl();
 
         assertEquals(currentPage, getHomePageURL());
 
+        //log user out
+        var homePage = new HomePage(driver);
+        homePage.logoutBtn.click();
+        currentPage = driver.getCurrentUrl();
+        assertEquals(currentPage, getLoginPageUrl());
 
+        //can navigate to home page
+        driver.get(getHomePageURL());
+        currentPage = driver.getCurrentUrl();
+        assertEquals(currentPage, getLoginPageUrl());
     }
 
     public String getLoginPageUrl() {

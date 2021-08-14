@@ -24,7 +24,7 @@ public class SignUpPage {
     public WebElement password;
 
     @FindBy(id = "signUpUserBtn")
-    public WebElement clickSignUpUserBtn;
+    public WebElement signUpUserBtn;
 
     public SignUpPage(WebDriver driver)
     {
