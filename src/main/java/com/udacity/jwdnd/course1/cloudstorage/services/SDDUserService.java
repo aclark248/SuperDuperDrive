@@ -32,13 +32,14 @@ public class SDDUserService {
         String encodedSalt = Base64.getEncoder().encodeToString(salt);
         String hashedPassword = hashService.getHashedValue(user.getPassword(), encodedSalt);
         var newSDDUser = new SDDUser();
-        newSDDUser.setUserId(null);
+        //newSDDUser.setUserId(null);
         newSDDUser.setUsername(user.getUsername());
         newSDDUser.setPassword(hashedPassword);
         newSDDUser.setFirstName(user.getFirstName());
         newSDDUser.setLastName(user.getLastName());
         newSDDUser.setSalt(encodedSalt);
-        return sddUserMapper.createUser(newSDDUser);
+        var result =  sddUserMapper.createUser(newSDDUser);
+        return result;
     }
 
 }

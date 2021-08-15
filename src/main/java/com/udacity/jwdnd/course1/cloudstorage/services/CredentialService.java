@@ -30,7 +30,7 @@ public class CredentialService {
         Credential newCredential = new Credential();
         newCredential.setUrl(credential.getUrl());
         newCredential.setUserName(credential.getUserName());
-        newCredential.setUserid(sddUser.getUserId());
+        newCredential.setUserid(sddUser.getUserid());
         newCredential.setKey(null);
 
 
@@ -48,7 +48,7 @@ public class CredentialService {
     public List<Credential> getAllCredentials(String userName)
     {
         SDDUser sddUser = sddUserService.getUser(userName);
-        var userId = sddUser.getUserId();
+        var userId = sddUser.getUserid();
         List<Credential> allUserCredentials = credentialMapper.getAllUserCredentials(userId);
         return allUserCredentials;
     }

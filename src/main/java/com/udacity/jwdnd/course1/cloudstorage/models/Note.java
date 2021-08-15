@@ -1,13 +1,16 @@
 package com.udacity.jwdnd.course1.cloudstorage.models;
 
+import org.springframework.lang.Nullable;
+
+import java.util.Optional;
+
 public class Note {
 
-
-    private int noteid;
+    private String noteid;
     private String notetitle;
     private String notedescription;
 
-    public Note(int noteid, String notetitle, String notedescription)
+    public Note(String noteid, String notetitle, String notedescription)
     {
         this.noteid = noteid;
         this.notetitle = notetitle;
@@ -17,11 +20,11 @@ public class Note {
     public Note() {}
 
 
-    public int getNoteid() {
+    public String getNoteid() {
         return noteid;
     }
 
-    public void setNoteid(int noteid) {
+    public void setNoteid(String noteid) {
         this.noteid = noteid;
     }
 

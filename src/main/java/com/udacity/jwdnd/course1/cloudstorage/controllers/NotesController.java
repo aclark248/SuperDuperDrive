@@ -1,8 +1,10 @@
 package com.udacity.jwdnd.course1.cloudstorage.controllers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
+import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NotesService;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.util.StringUtils;
+
+import java.util.Optional;
 
 @Controller
 public class NotesController {
@@ -25,15 +29,18 @@ public class NotesController {
 
     //create-note
     @PostMapping("/create-note")
-    public String createNote(@ModelAttribute Note note, Authentication authentication, RedirectAttributes redirectAttributes) {
+    public String createNote(Note note, Authentication authentication, RedirectAttributes redirectAttributes) {
         var userName = authentication.getPrincipal().toString();
         int result = -1;
-        var updateNote = StringUtils.isEmpty(String.valueOf(note.getNoteid()));
-        if (updateNote) {
-            result = notesService.updateNote(note);
+        var noteId = note.getNoteid();
+        //var result2 = noteId < 0;
+        var createNewNote = note.getNoteid().isEmpty();
+        var x = 12;
+        if (createNewNote) {
+            result = notesService.addNote(note, userName);
         }
         else {
-            result = notesService.addNote(note, userName);
+            result = notesService.updateNote(note);
         }
         if(result == 1) {
             redirectAttributes.addFlashAttribute("success", "The note was successfully created.");

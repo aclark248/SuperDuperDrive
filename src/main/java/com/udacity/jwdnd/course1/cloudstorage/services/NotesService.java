@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.FileMapper;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.NotesMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
+import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
 import com.udacity.jwdnd.course1.cloudstorage.models.SDDUser;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class NotesService {
     public int addNote(Note note, String userName)
     {
         SDDUser sddUser = sddUserService.getUser(userName);
-        var userId = sddUser.getUserId();
+        var userId = sddUser.getUserid();
         var result = notesMapper.insertNote(note, userId);
         return result;
     }
@@ -32,7 +33,7 @@ public class NotesService {
     public List<Note> getUserNotes(String username)
     {
         SDDUser sddUser = sddUserService.getUser(username);
-        var userid = sddUser.getUserId();
+        var userid = sddUser.getUserid();
         var userNotes = notesMapper.findUserNotes(userid);
         return userNotes;
     }
