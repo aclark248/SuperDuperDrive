@@ -2,6 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.File;
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
+import com.udacity.jwdnd.course1.cloudstorage.models.NoteForm;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

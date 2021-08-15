@@ -36,6 +36,9 @@ public class HomePage {
     @FindBy(id="btnEditNote")
     public WebElement btnEditNote;
 
+    @FindBy(id="btnDeleteNote")
+    public WebElement btnDeleteNote;
+
 
 
     //new note form

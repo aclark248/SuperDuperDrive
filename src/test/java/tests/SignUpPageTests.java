@@ -3,7 +3,10 @@ package tests;
 
 import com.udacity.jwdnd.course1.cloudstorage.CloudStorageApplication;
 import com.udacity.jwdnd.course1.cloudstorage.controllers.HomeController;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.NotesMapper;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.SDDUserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
+import com.udacity.jwdnd.course1.cloudstorage.models.SDDUser;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import models.HomePage;
 import models.LoginPage;
@@ -17,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -50,6 +54,12 @@ public class SignUpPageTests {
     final String updatedNoteTitle = "second note title";
     final String userName = "johndoe324";
     final String password = "ApeCook2443";
+
+    @Autowired
+    private NotesMapper notesMapper;
+
+    @Autowired
+    private SDDUserMapper sddUserMapper;
 
 
     @BeforeAll
@@ -145,6 +155,8 @@ public class SignUpPageTests {
         TimeUnit.SECONDS.sleep(4);
         var noteExist = noteExists(noteTitle);
 
+        deleteNote();
+
         //assert
         assertEquals(noteExist, true);
     }
@@ -179,6 +191,7 @@ public class SignUpPageTests {
         TimeUnit.SECONDS.sleep(4);
         var noteExist = noteExists(updatedNoteTitle);
         assertEquals(noteExist, true);
+        homePage.btnDeleteNote.click();
     }
 
 
@@ -239,25 +252,27 @@ public class SignUpPageTests {
 
     public void createUserAndSignIn()
     {
-        //createTestUser();
+        createTestUser();
         signIn();
     }
 
     public void createTestUser()
     {
         WebDriverWait wait = new WebDriverWait (driver, 20);
+        var testUser = sddUserMapper.getUser(userName);
+        if (testUser == null) {
+            //navigate to sign up page
+            driver.get("http://localhost:" + port + "/signup");
+            signUpPage = new SignUpPage(driver);
 
-        //navigate to sign up page
-        driver.get("http://localhost:" + port + "/signup");
-        signUpPage = new SignUpPage(driver);
-
-        //fill out sign up form
-        signUpPage.firstName.sendKeys("John");
-        signUpPage.lastName.sendKeys("Doe");
-        signUpPage.userName.sendKeys(userName);
-        signUpPage.password.sendKeys(password);
-        wait.until(ExpectedConditions.elementToBeClickable(signUpPage.signUpUserBtn)).click();
-        //signUpPage.signUpUserBtn.click();
+            //fill out sign up form
+            signUpPage.firstName.sendKeys("John");
+            signUpPage.lastName.sendKeys("Doe");
+            signUpPage.userName.sendKeys(userName);
+            signUpPage.password.sendKeys(password);
+            wait.until(ExpectedConditions.elementToBeClickable(signUpPage.signUpUserBtn)).click();
+            //signUpPage.signUpUserBtn.click();
+        }
     }
 
     public void signIn()
@@ -272,6 +287,28 @@ public class SignUpPageTests {
         wait.until(ExpectedConditions.elementToBeClickable(loginPage.loginButton)).click();
     }
 
+
+    public void deleteNote() throws InterruptedException {
+        driver.get("http://localhost:" + port + "/home");
+        homePage = new HomePage(driver);
+
+        //verify note exists
+        homePage.notesTab.click();
+        TimeUnit.SECONDS.sleep(4);
+        WebDriverWait wait = new WebDriverWait (driver, 20);
+
+
+        List<WebElement> notesList = homePage.notesTable.findElements(By.tagName("td"));
+
+        for(int i=3; i<notesList.size(); i++)
+        {
+            wait.until(ExpectedConditions.elementToBeClickable(homePage.notesTab));
+            homePage.notesTab.click();
+            var deleteNoteButtonLink = notesList.get(i).findElement(By.tagName("a"));
+            wait.until(ExpectedConditions.elementToBeClickable(deleteNoteButtonLink));
+            deleteNoteButtonLink.click();
+        }
+    }
 
 
 
