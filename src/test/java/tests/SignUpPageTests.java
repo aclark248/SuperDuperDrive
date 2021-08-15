@@ -194,6 +194,28 @@ public class SignUpPageTests {
         homePage.btnDeleteNote.click();
     }
 
+    @Test
+    public void deleteNote()  {
+        homePage = new HomePage(driver);
+
+        //create user and sign in
+        createUserAndSignIn();
+
+        //create note
+        createNote(homePage);
+
+        //delete note
+        WebDriverWait wait = new WebDriverWait (driver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.notesTab));
+        homePage.notesTab.click();
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.btnDeleteNote));
+        homePage.btnDeleteNote.click();
+
+        var noteExist = noteExists(updatedNoteTitle);
+        assertEquals(noteExist, false);
+
+    }
+
 
     //Write a test that deletes a note and
     // verifies that the note is no longer displayed.
@@ -287,7 +309,7 @@ public class SignUpPageTests {
         wait.until(ExpectedConditions.elementToBeClickable(loginPage.loginButton)).click();
     }
 
-
+    /****
     public void deleteNote() throws InterruptedException {
         driver.get("http://localhost:" + port + "/home");
         homePage = new HomePage(driver);
@@ -308,7 +330,7 @@ public class SignUpPageTests {
             wait.until(ExpectedConditions.elementToBeClickable(deleteNoteButtonLink));
             deleteNoteButtonLink.click();
         }
-    }
+    }****/
 
 
 
