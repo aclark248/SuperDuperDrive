@@ -19,20 +19,27 @@ public class CredentialService {
 
     private final CredentialMapper credentialMapper;
 
-    public CredentialService(SDDUserService sddUserService, CredentialMapper credentialMapper) {
+    private final EncryptionService encryptionService;
+
+    private final String key = "thisismykey";
+
+    public CredentialService(SDDUserService sddUserService, CredentialMapper credentialMapper, EncryptionService encryptionService) {
         this.sddUserService = sddUserService;
         this.credentialMapper = credentialMapper;
+        this.encryptionService = encryptionService;
     }
 
     public int addCredential(Credential credential, String userName) {
         SDDUser sddUser = sddUserService.getUser(userName);
 
+        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), key);
+
         Credential newCredential = new Credential();
         newCredential.setUrl(credential.getUrl());
-        newCredential.setUserName(credential.getUserName());
+        newCredential.setUsername(credential.getUsername());
         newCredential.setUserid(sddUser.getUserid());
-        newCredential.setKey(null);
-
+        newCredential.setPassword(encryptedPassword);
+        newCredential.setKey(key);
 
         var result = credentialMapper.addCredential(newCredential);
 

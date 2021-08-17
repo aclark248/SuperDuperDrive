@@ -31,12 +31,12 @@ public class CredentialsController {
     public String createCredential(@ModelAttribute Credential credential, Authentication authentication, RedirectAttributes redirectAttributes) {
         var userName = authentication.getPrincipal().toString();
         int result = -1;
-        var updateCredential = StringUtils.isEmpty(String.valueOf(credential.getCredentialid()));
-        if (updateCredential) {
-            result = credentialService.updateCredential(credential);
+        var createNewCredential = credential.getCredentialid().isEmpty();
+        if (createNewCredential) {
+            result = credentialService.addCredential(credential, userName);
         }
         else {
-            result = credentialService.addCredential(credential, userName);
+            result = credentialService.updateCredential(credential);
         }
 
         if(result == 1) {

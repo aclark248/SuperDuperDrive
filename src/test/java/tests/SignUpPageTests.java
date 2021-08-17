@@ -194,6 +194,9 @@ public class SignUpPageTests {
         homePage.btnDeleteNote.click();
     }
 
+
+    //Write a test that deletes a note and
+    // verifies that the note is no longer displayed.
     @Test
     public void deleteNote()  {
         homePage = new HomePage(driver);
@@ -216,9 +219,22 @@ public class SignUpPageTests {
 
     }
 
+    //Write a test that creates a set of credentials,
+    // verifies that they are displayed, and
+    // verifies that the displayed password is encrypted.
+    @Test
+    public void createCredential() {
+        homePage = new HomePage(driver);
 
-    //Write a test that deletes a note and
-    // verifies that the note is no longer displayed.
+        //create user and sign in
+        createUserAndSignIn();
+
+        //create credential
+
+
+    }
+
+
 
 
 
