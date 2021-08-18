@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -32,14 +34,20 @@ public class CredentialService {
     public int addCredential(Credential credential, String userName) {
         SDDUser sddUser = sddUserService.getUser(userName);
 
-        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), key);
 
         Credential newCredential = new Credential();
         newCredential.setUrl(credential.getUrl());
         newCredential.setUsername(credential.getUsername());
         newCredential.setUserid(sddUser.getUserid());
+
+        SecureRandom random = new SecureRandom();
+        byte[] key = new byte[16];
+        random.nextBytes(key);
+        String encodedKey = Base64.getEncoder().encodeToString(key);
+        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), encodedKey);
+
+        newCredential.setKey(encodedKey);
         newCredential.setPassword(encryptedPassword);
-        newCredential.setKey(key);
 
         var result = credentialMapper.addCredential(newCredential);
 
@@ -48,6 +56,16 @@ public class CredentialService {
 
     public int updateCredential(Credential credential)
     {
+
+        SecureRandom random = new SecureRandom();
+        byte[] key = new byte[16];
+        random.nextBytes(key);
+        String encodedKey = Base64.getEncoder().encodeToString(key);
+        String encryptedPassword = encryptionService.encryptValue(credential.getPassword(), encodedKey);
+
+        credential.setKey(encodedKey);
+        credential.setPassword(encryptedPassword);
+
         var result = credentialMapper.updateCredential(credential);
         return result;
     }
