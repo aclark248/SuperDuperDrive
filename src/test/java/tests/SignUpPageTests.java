@@ -52,6 +52,11 @@ public class SignUpPageTests {
 
     final String noteTitle =  "first note title";
     final String updatedNoteTitle = "second note title";
+
+    final String credentialURL = "wwww.google.com";
+    final String credentialUserName = "testusername234";
+    final String credentialPassword = "password1342";
+
     final String userName = "johndoe324";
     final String password = "ApeCook2443";
 
@@ -230,7 +235,36 @@ public class SignUpPageTests {
         createUserAndSignIn();
 
         //create credential
+        createCredential(homePage);
 
+        WebDriverWait wait = new WebDriverWait (driver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialsTab));
+        homePage.credentialsTab.click();
+
+        //delete credential
+        var credentialExists = credentialExists(credentialUserName);
+        assertEquals(credentialExists, true);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.deleteCredentialButton));
+        homePage.deleteCredentialButton.click();
+
+    }
+
+    public void createCredential(HomePage homePage)
+    {
+        WebDriverWait wait = new WebDriverWait (driver, 20);
+
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialsTab));
+        homePage.credentialsTab.click();
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.addNewCredentialButton));
+        homePage.addNewCredentialButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialURL));
+        homePage.credentialURL.sendKeys(credentialURL);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialUsername));
+        homePage.credentialUsername.sendKeys(credentialUserName);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialPassword));
+        homePage.credentialPassword.sendKeys(credentialPassword);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialSubmit));
+        homePage.credentialSubmit.click();
 
     }
 
@@ -263,6 +297,22 @@ public class SignUpPageTests {
             var currentNote = notesList.get(i);
             var noteTitle = currentNote.getAttribute("innerHTML");
             if (noteTitle.equals(title))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean credentialExists(String userName)
+    {
+        List<WebElement> credentialsList = homePage.credentialTable.findElements(By.tagName("td"));
+
+        for(int i=0; i<credentialsList.size(); i++)
+        {
+            var currentCredential = credentialsList.get(i);
+            var currentCredentialUserName = currentCredential.getAttribute("innerHTML");
+            if (currentCredentialUserName.equals(credentialUserName))
             {
                 return true;
             }
