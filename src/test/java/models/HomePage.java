@@ -19,8 +19,16 @@ public class HomePage {
     @FindBy(id = "nav-notes-tab")
     public WebElement notesTab;
 
+    @FindBy(id = "nav-credentials-tab")
+    public WebElement credentialsTab;
+
     @FindBy(id = "addNewNoteButton")
     public WebElement addNewNoteBtn;
+
+    @FindBy(id = "addNewCredentialButton")
+    public WebElement addNewCredentialButton;
+
+
 
 
     //notes table
@@ -51,7 +59,27 @@ public class HomePage {
     @FindBy(id = "note-save-changes")
     public WebElement submitNoteBtn;
 
-    //private final WebDriverWait wait;
+    //credential form
+    @FindBy(id = "credential-url")
+    public WebElement credentialURL;
+
+    @FindBy(id = "credential-username")
+    public WebElement credentialUsername;
+
+    @FindBy(id = "credential-password")
+    public WebElement credentialPassword;
+
+    @FindBy(id = "credential-save-changes")
+    public WebElement credentialSubmit;
+
+
+
+    //credential table
+    @FindBy(id = "credentialTable")
+    public WebElement credentialTable;
+
+    @FindBy(id = "deleteCredentialButton")
+    public WebElement deleteCredentialButton;
 
 
 
@@ -59,7 +87,6 @@ public class HomePage {
     public HomePage(WebDriver driver)
     {
         PageFactory.initElements(driver, this);
-        //wait = new WebDriverWait(driver, 500);
     }
 
 
