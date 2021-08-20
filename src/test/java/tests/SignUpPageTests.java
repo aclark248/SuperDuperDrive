@@ -57,6 +57,8 @@ public class SignUpPageTests {
     final String credentialUserName = "testusername234";
     final String credentialPassword = "password1342";
 
+    final String credentialUserName2 = "testusername84848332";
+
     final String userName = "johndoe324";
     final String password = "ApeCook2443";
 
@@ -248,6 +250,76 @@ public class SignUpPageTests {
         homePage.deleteCredentialButton.click();
 
     }
+
+
+    //The user should be able to view/edit
+    // When the user views the credential, they should be able to see the unencrypted password.
+    @Test
+    public void editCredential() {
+        homePage = new HomePage(driver);
+
+        //create user and sign in
+        createUserAndSignIn();
+
+        //create credential
+        createCredential(homePage);
+
+        //navigate to credentials tab
+        WebDriverWait wait = new WebDriverWait (driver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialsTab));
+        homePage.credentialsTab.click();
+
+        //edit credential
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialEditButton));
+        homePage.credentialEditButton.click();
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialUsername));
+        homePage.credentialUsername.clear();
+        homePage.credentialUsername.sendKeys(credentialUserName2);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialSubmit));
+        homePage.credentialSubmit.click();
+
+
+        //navigate to credentials tab
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialsTab));
+        homePage.credentialsTab.click();
+
+        //delete credential
+        var credentialExists = credentialExists(credentialUserName2);
+        assertEquals(credentialExists, true);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.deleteCredentialButton));
+        homePage.deleteCredentialButton.click();
+
+    }
+
+
+    // or delete individual credentials.
+    @Test
+    public void deleteCredential()  {
+        homePage = new HomePage(driver);
+
+        //create user and sign in
+        createUserAndSignIn();
+
+        //create credential
+        createCredential(homePage);
+
+        //navigate to credentials tab
+        WebDriverWait wait = new WebDriverWait (driver, 20);
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialsTab));
+        homePage.credentialsTab.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.deleteCredentialButton));
+        homePage.deleteCredentialButton.click();
+
+        wait.until(ExpectedConditions.elementToBeClickable(homePage.credentialsTab));
+        homePage.credentialsTab.click();
+
+        //delete credential
+        var credentialExists = credentialExists(credentialUserName);
+        assertEquals(credentialExists, false);
+
+    }
+
 
     public void createCredential(HomePage homePage)
     {
