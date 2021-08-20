@@ -81,6 +81,8 @@ public class HomePage {
     @FindBy(id = "deleteCredentialButton")
     public WebElement deleteCredentialButton;
 
+    @FindBy(id = "credentialEditButton")
+    public WebElement credentialEditButton;
 
 
 
